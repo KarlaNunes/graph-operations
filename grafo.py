@@ -47,10 +47,6 @@ class LinkedList:
                 adj = adj.next_adjacent
             current_node = current_node.next_vertice
 
-class Graph:
-    def __init__(self):
-        self.vertices = LinkedList() # lista encadeada de vertices
-
 vertices = LinkedList()
 vertices.insert_next_vertice(1)
 vertices.insert_next_vertice(2)
