@@ -40,7 +40,7 @@ class LinkedList:
         current_node = self.head
 
         while current_node:
-            print(f"{current_node.value} -->")
+            print(f"{current_node.value} -> ", end=" ")
             adj = current_node.next_adjacent
             while adj:
                 print(adj.value, end=" -> " if adj.next_adjacent else "\n")
