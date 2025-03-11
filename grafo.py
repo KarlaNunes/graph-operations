@@ -124,39 +124,62 @@ class LinkedList:
 
         return None
     
+    def dfs_lowest_cost_path(self, node, end, path=None, cost=0, best=None):
+        if path is None:
+            path = []
+        
+        node.visited = True
+        path.append(node.value)
+        
+        if node.value == end:
+            if best is None or cost < best[1]:
+                best = (path[:], cost)
+        else:
+            adj = node.next_adjacent
+            while adj:
+                next_node = self.find_vertice(adj.value)
+                if next_node and not next_node.visited:
+                    best = self.dfs_lowest_cost_path(next_node, end, path, cost + adj.adjacent_weight, best)
+                adj = adj.next_adjacent
+        
+        node.visited = False
+        path.pop()
+        return best
+    
+    def find_lowest_cost_path(self, start, end):
+        start_node = self.find_vertice(start)
+        if not start_node:
+            return None
+        
+        result = self.dfs_lowest_cost_path(start_node, end)
+        return result
 
-graph = LinkedList()
+    
 
-for city in ["A", "B", "C", "D", "E", "F"]:
-    graph.insert_next_vertice(city)
+grafo = LinkedList()
+cidades = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"]
+for cidade in cidades:
+    grafo.insert_next_vertice(cidade)
 
-graph.insert_next_adjacent("B", "A")
-graph.insert_next_adjacent("C", "A")
-graph.insert_next_adjacent("D", "B")
-graph.insert_next_adjacent("E", "B")
-graph.insert_next_adjacent("F", "C")
-graph.insert_next_adjacent("E", "D")
-graph.insert_next_adjacent("F", "E")
+grafo.insert_edge("A", "B", 10)
+grafo.insert_edge("A", "C", 5)
+grafo.insert_edge("A", "D", 1)
+grafo.insert_edge("B", "C", 3)
+grafo.insert_edge("B", "E", 10)
+grafo.insert_edge("C", "F", 10)
+grafo.insert_edge("D", "E", 2)
+grafo.insert_edge("D", "G", 2)
+grafo.insert_edge("E", "F", 1)
+grafo.insert_edge("E", "H", 10)
+grafo.insert_edge("F", "I", 10)
+grafo.insert_edge("G", "H", 3)
+grafo.insert_edge("H", "I", 1)
+grafo.insert_edge("I", "J", 10)
+grafo.insert_edge("J", "K", 10)
+grafo.insert_edge("K", "L", 10)
+grafo.insert_edge("L", "M", 10)
+grafo.insert_edge("D", "M", 1)
 
-graph.print_list()
 
-print(f"\n","-" * 20)
-print(f"Shortest path: \n")
-print(graph.bfs_shortest_path("A", "F"))  # ['A', 'C', 'F']
-
-# vertices = LinkedList()
-# vertices.insert_next_vertice(1)
-# vertices.insert_next_vertice(2)
-# vertices.insert_next_vertice(3)
-# vertices.insert_next_adjacent(2, 1)
-# vertices.insert_next_adjacent(3, 1)
-# vertices.insert_next_adjacent(4, 1)
-# vertices.insert_next_adjacent(1, 2)
-# vertices.insert_next_adjacent(3, 2, 5)
-# vertices.insert_next_adjacent(4, 2)
-# vertices.insert_next_adjacent(5, 2)
-# vertices.insert_next_adjacent(1, 3)
-# vertices.insert_next_adjacent(2, 3)
-# vertices.insert_next_adjacent(5, 3)
-# vertices.print_list()
-
+melhor_caminho, menor_custo = grafo.find_lowest_cost_path("A", "M")
+print(f"Melhor caminho: {melhor_caminho}, Menor custo: {menor_custo}")
