@@ -5,13 +5,6 @@ class Node:
         self.adjacent_weight = weight
         self.visited = False
         self.next_vertice = None
-
-class Edge:
-    def __init__(self, value, weight):
-        self.value = value
-        self.weight = weight
-        self.next_adjacent = None
-
 class Queue:
     def __init__(self):
         self.elements = []
@@ -25,6 +18,14 @@ class Queue:
 class LinkedList:
     def __init__(self):
         self.head = None
+
+    def find_vertice(self, value):
+        current = self.head
+        while current:
+            if current.value == value:
+                return current
+            current = current.next_vertice
+        return None
 
     def insert_next_adjacent(self, value, vertice_head, weight=None):
         current_node = self.head
