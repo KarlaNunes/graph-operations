@@ -138,6 +138,10 @@ graph.insert_next_adjacent("F", "C")
 graph.insert_next_adjacent("E", "D")
 graph.insert_next_adjacent("F", "E")
 
+graph.print_list()
+
+print(f"\n","-" * 20)
+print(f"Shortest path: \n")
 print(graph.bfs_shortest_path("A", "F"))  # ['A', 'C', 'F']
 
 # vertices = LinkedList()
